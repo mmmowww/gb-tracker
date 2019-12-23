@@ -5,7 +5,7 @@ use Yii;
 
 class console extends \yii\console\Controller /// Not working....
 {                                             ///Why?
-    public function actionGreatings()
+    public function actionGreatings()    
     {
         print "Hello, world";
     }

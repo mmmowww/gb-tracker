@@ -260,9 +260,9 @@ class SiteController extends Controller
         ]);
     }
     function actionHello(){
-        return $this->render('hello');
+        return $this->render('hello');   
     }
     function actionTask(){  //Tasktracker
-       return $this->render('task');
+       return $this->render('task');   
     }
 }
