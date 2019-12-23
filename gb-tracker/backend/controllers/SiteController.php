@@ -87,7 +87,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Logout action.
+     * Logout action.    
      *
      * @return string
      */

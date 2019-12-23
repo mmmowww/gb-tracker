@@ -36,7 +36,7 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
+        /* error working
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
