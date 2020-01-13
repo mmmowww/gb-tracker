@@ -14,6 +14,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use frontend\models\BDregister;
 
 /**
  * Site controller
@@ -157,6 +158,8 @@ class SiteController extends Controller
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
+      
+
             return $this->goHome();
         }
 
@@ -164,7 +167,34 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+    public function actionRegistration(){ // Мой костыль
+        $model = new SignupForm();
+       $Request= Yii::$app->request->post();
+        /// Я пробовал через конструктор "Yii::$app->request->post('name');"
+        // Что отказыветься хоть что-то делать, приходиться через костыли
+        $email= Yii::$app->request->post('email');
+        $password= Yii::$app->request->post('password');
+        $user = $Request["SignupForm"]["username"];
+        $email = $Request["SignupForm"]["email"];
+        $password = $Request["SignupForm"]["password"];
 
+        //////////////////// Работа с БД
+
+        $registration = new BDregister();        
+        $registration->username = $user;
+        $registration->email = $email;
+        $registration->password = $password;
+        $registration->save();
+        
+
+        
+        return $this->render('signup', [
+            'model' => $model,
+            'user'=>$user,
+            'email'=>$email,
+            'password'=>$password,
+        ]);
+    }
     /**
      * Requests password reset.
      *
