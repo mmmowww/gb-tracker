@@ -34,7 +34,9 @@
         "codeception/base":"^3.0",
         "guzzlehttp/guzzle":"^6.3",
         "symfony/event-dispatcher":"<=4.2.8",
-        "facebook/webdriver":"^1.0.1"
+        "facebook/webdriver":"^1.0.1",
+        "symfony/event-dispatcher": "<=4.2.8",
+        "cboden/ratchet": "^0.4.1"
     },
     "config": {
         "process-timeout": 1800,

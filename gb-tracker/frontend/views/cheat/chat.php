@@ -1,29 +1,3 @@
-<?php
-use yii\helpers\Html;
-use yii\helpers\Url;
-
-?>
-<h1>  This Task  </h1>
-
-<h2> Задачи </h2>
-
-<?php
-//var_dump($Task);
- 
-foreach ($Task as $MyTask) {
-	echo "</br>";
-	echo '<a href = "'.Url::to(['site/concretokaltask','id'=>$MyTask['id']]).'">('.$MyTask['TaskName']. ') Номер :'.$MyTask['id'].'</a>';
-	echo "</br>";
-	echo "Task Manual";
-	echo "</br>";
-	echo $MyTask['TaskManual']; 
-	echo "</br>";
-	echo "Исполняет: ".$MyTask['UserName'];
-	echo "</br>--------</br>";
-}
-?>
-
-<h2>Чат</h2>
 <h2>THIS IS CHAT!</h2>
 <div id="chat" style="min-height: 100px; border-color: #1c7430; border: 2px;"></div>
     <div id="response" style="color:#D00"></div>

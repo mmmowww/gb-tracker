@@ -15,6 +15,7 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use frontend\models\BDregister;
+use frontend\models\TaskProblem;
 
 /**
  * Site controller
@@ -290,9 +291,71 @@ class SiteController extends Controller
         ]);
     }
     function actionHello(){
+
         return $this->render('hello');   
     }
+    //////// Работа с таском
     function actionTask(){  //Tasktracker
-       return $this->render('task');   
+
+if(Yii::$app->user->isGuest){  // Если клиент нам не нравиться
+return $this->render('index');  // Выгоняем его
+
+}
+
+
+
+     $Task = (new \yii\db\Query())
+    ->select(['id', 'TaskName','TaskManual','UserName'])
+    ->from('taskproblem')
+    ->limit(10)
+    ->all(); // Попробовал так выводить, мне понравилось
+
+
+
+/////Танцы с бубном ради чата
+
+
+
+////
+        return $this->render('task',['Task'=>$Task]); 
+          
+    }
+    function actionConcretokaltask($id){
+        $Task = (new \yii\db\Query())
+    ->select(['id', 'TaskName','TaskManual','UserName','dataCreate','dataUpdate'])
+    ->from('taskproblem')
+    ->limit(10)
+    ->where('id=:id',[':id'=>$id])
+    ->all();
+    return $this->render('Concretokaltask',['Task'=>$Task]);
+    }
+    public function actionEdittask($id){ //Вот когда я 2жды заиспользовал Id то задумался, может логически я делаю что-то не так.
+        if(is_null($EditTask)){
+      
+
+       $EditTask = new EditTask();
+ 
+
+
+
+
+            $Request= Yii::$app->request->post();
+            $TaskName = $Request["SignupForm"]["TaskName"];
+            $TaskManual = $Request["SignupForm"]["TaskManual"];
+            $UserName = $Request["SignupForm"]["UserName"];
+            $dataUpdate = $Request["SignupForm"]["dataUpdate"];
+          Yii::$app->db->createCommand()->update('taskproblem', [
+           
+            'TaskName'=>$TaskName,
+            'TaskManual'=>$TaskManual,
+            'UserName'=>$UserName,
+            'dataUpdate'=>$dataUpdate,
+
+
+        ], 'id=:id',[':id'=>$id])->execute();
+        };
+       
+
+
     }
 }
