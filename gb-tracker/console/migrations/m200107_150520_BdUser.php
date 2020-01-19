@@ -16,7 +16,7 @@ II)По образу и подобию замутить ТАСК
 */
 
 
-$this->createTable('BdUser', [
+$this->createTable('BdUser',[
             'id' => $this->primaryKey(),
             'username' => $this->string(),
             'email' => $this->text(),

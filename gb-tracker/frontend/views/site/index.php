@@ -51,3 +51,16 @@ $this->title = 'My Yii Application';
 
     </div>
 </div>
+$js = <<<JS
+    $(document).on('.js-get-time','click', function () {
+        debugger;
+        $.ajax({
+            url:'/site/time'
+        }).success(function (data) {
+            console.log(data);
+            $('.js-set-data').html(data.time)
+        })
+    });
+JS;
+$this->registerJs($js, yii\web\View::POS_LOAD);
+?>
