@@ -8,19 +8,51 @@ use yii\helpers\Url;
 <h2> Задачи </h2>
 
 <?php
-//var_dump($Task);
+ $Task1= $Task['0'];
+var_dump($Task1);
  
-foreach ($Task as $MyTask) {
+
+foreach ($Task1 as $MyTask) {
+	
+ $id = $MyTask[0];
+
+ $user = $MyTask[1]; 
+ $nameTask = $MyTask[2]; 
+ $manual = $MyTask[3];
+ $priority = $MyTask[4];
+ $status = $MyTask[5];
+ $idproject = $MyTask[6];
+
+
+echo "--</br(-->";
+ echo $id = iconv("ASCII","UTF-8",$id);
+ echo "--)</br-->";
+ $user = iconv("ASCII","UTF-8",$user); 
+ $nameTask = iconv("ASCII","UTF-8",$nameTask); 
+ $manual = iconv("ASCII","UTF-8",$manual);
+ $priority = iconv("ASCII","UTF-8",$priority);
+ $status = iconv("ASCII","UTF-8",$status);
+ $idproject = iconv("ASCII","UTF-8",$idproject);
+
 	echo "</br>";
-	echo '<a href = "'.Url::to(['site/concretokaltask','id'=>$MyTask['id']]).'">('.$MyTask['TaskName']. ') Номер :'.$MyTask['id'].'</a>';
+	echo '<a href = "'.Url::to(['site/concretokaltask',['id'=>$idproject]]).'">('.$name.') Номер :'.$id.'</a>';
 	echo "</br>";
 	echo "Task Manual";
 	echo "</br>";
-	echo $MyTask['TaskManual']; 
+	echo $manual; 
 	echo "</br>";
-	echo "Исполняет: ".$MyTask['UserName'];
+	echo "Исполняет: ".$user;
 	echo "</br>--------</br>";
-}
+
+};
+
+
+
+
+
+
+
+
 ?>
 
 <h2>Чат</h2>
@@ -44,7 +76,3 @@ foreach ($Task as $MyTask) {
 <?= \yii\helpers\Html::hiddenInput('username', $username, ['class' => 'js-username']) ?>
 
 
-
-<?
-//48.49
-?>

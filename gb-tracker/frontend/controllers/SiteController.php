@@ -17,6 +17,7 @@ use frontend\models\ContactForm;
 use frontend\models\BDregister;
 use frontend\models\TaskProblem;
 
+
 /**
  * Site controller
  */
@@ -297,19 +298,38 @@ class SiteController extends Controller
     //////// Работа с таском
     function actionTask(){  //Tasktracker
 
-if(Yii::$app->user->isGuest){  // Если клиент нам не нравиться
+if(!Yii::$app->user->isGuest){  // Если клиент нам не нравиться
 return $this->render('index');  // Выгоняем его
-
 }
 
 
 
      $Task = (new \yii\db\Query())
-    ->select(['id', 'TaskName','TaskManual','UserName'])
-    ->from('taskproblem')
+    ->select(['id', 'username','nameTask','manualTask','priority','ProjectStatus','idProject'])
+    ->from('task','`project')->where('task.idProject' == 'project.id')
     ->limit(10)
     ->all(); // Попробовал так выводить, мне понравилось
 
+    ///Запросимка пост
+    $reqvest = Yii::$app->request->post();
+    $id = $reqvest['SignupForm']['id']; // Вясняю ид проэкта
+/*
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+1)Выбрать из таска ИД проэкта
+2)связать вид таска+проэкта
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+*/
+
+    ////
+    $ProjectJSON = (new \yii\db\Query())
+    ->select(['id', 'nameProject','manualProject','priority','ProjectStatus','ProjectJSON'])
+    ->from('project')
+    ->where(['id' => $id])
+    ->limit(1)
+    ->all();
 
 
 /////Танцы с бубном ради чата
@@ -317,7 +337,7 @@ return $this->render('index');  // Выгоняем его
 
 
 ////
-        return $this->render('task',['Task'=>$Task]); 
+    return $this->render('task',['Task'=>$Task]); 
           
     }
     function actionConcretokaltask($id){
@@ -357,5 +377,34 @@ return $this->render('index');  // Выгоняем его
        
 
 
+    }
+    public function actionProject($id){ // Обработка проэкта
+//https://p0vidl0.info/yii2-razbiraemsya-s-gridview.html
+        // Остлась добить "Проэкт"
+        // Подгодтовить вид и упихнть его в GRID
+
+$ProjectJSON = (new \yii\db\Query())
+    ->select(['id', 'nameProject','manualProject','priority','ProjectStatus','ProjectJSON'])
+    ->from('project')
+    ->where(['id' => $id])
+    ->limit(1)
+    ->all();
+    $poket =  (new \yii\db\Query())
+    ->select(['id','ProjectJSON'])
+    ->from('project')
+    ->where(['id' => $id])
+    ->limit(1)
+    ->all();
+//$ProjectJSONdecode = json_decode($poket,true); //Вот тут я долго думал, может изначально принимать масив или нет.
+// В итоге понял что "Проэкт может быть описан и большей глубинной" чем я того ожидаю
+// По сему и выбрал JSON
+   
+$ProjectJSONdecode = $poket;
+
+return $this->render('project',[
+    'id'=>$id,
+'ProjectJSON'=>$ProjectJSON,
+'ProjectJSONdecode'=>$ProjectJSONdecode,
+]);
     }
 }
