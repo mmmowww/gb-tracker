@@ -16,6 +16,7 @@ use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use frontend\models\BDregister;
 use frontend\models\TaskProblem;
+use frontend\models\Chatlog;
 
 
 /**

@@ -1,11 +1,11 @@
 <?
 namespace console\controllers;
-
+use yii\console\Controller;
 use Yii;
 
-class console extends \yii\console\Controller /// Not working....
+class HelloController extends Controller /// Not working....
 {                                             ///Why?
-    public function actionGreatings()    
+    public function actionHELL()    
     {
         print "Hello, world";
     }

@@ -17,7 +17,7 @@ class m200108_082829_Task extends Migration
             'manualTask' => $this->text(),
             'priority'=>$this->integer(), //0,1,2,3 0- Самое важное,1 - менее и т.д.
             'ProjectStatus'=>$this->text(), //Начато Выполняеться Выполненно, Сданно,
-            'idProject'=>$this->integer(),
+            'idProject'=>$this->integer()->primaryKey(),
         ]); // Впервые такое делаю
    // $this->addForeignKey('fk-ProjectManual', // название связи
    //                             'Task', // текущая тавблица
@@ -26,13 +26,31 @@ class m200108_082829_Task extends Migration
    //                             'id'); // колонка из дочерней таблицы
     // Хотел сделать карсиво, через внешний ключ откзываеться работать
     // Пришлось "нашеноковать"
+     $this->createIndex(
+            'fk_Task_For_Project',
+            'Task',
+            'Project'
+        );
+      $this->addForeignKey(
+            'fk_Task_For_Project',
+            'Task',
+            'idProject',
+            'Project',
+            'id',
+            'CASCADE'
+        );
                            
-    
+    $sql = "CREATE TRIGGER TaskСreation
+            AFTER INSERT
+            ON `Task` FOR EACH ROW BEGIN INSERT INTO `chat_log` (`id`, `username`, `created_at`, `message`, `type`) VALUES (NULL, 'Оповещение', NULL, 'Внимание создана новая Задача!\r\nВсем всем с ним ознакомиться', NULL); END*";
+            $this->execute($sql);
     }
 
    
     public function safeDown()
     {
+            $sql = "DROP TRIGGER TaskСreation";
+            $this->execute($sql);
          $this->dropTable('Task');
     }
 
