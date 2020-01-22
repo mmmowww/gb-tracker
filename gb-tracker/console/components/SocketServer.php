@@ -11,7 +11,7 @@ use Ratchet\WebSocket\WsServer;
 use frontend\models\ChatLog;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
-class Chat implements MessageComponentInterface{
+class SocketServer implements MessageComponentInterface{
 	protected $clients;
     public function __construct()
     {
@@ -33,21 +33,33 @@ class Chat implements MessageComponentInterface{
         $msgArray = json_decode($msg, true);
         ChatLog::create($msgArray);
         if ($msgArray['type'] === ChatLog::SHOW_HISTORY) {
-            $this->showHistory($from);
+            $this->showHistory($from,$msg);
         } else {
             foreach ($this->clients as $client) {
-                $client->send($msg);
+                 $msgArray['created_at'] = \Yii::$app->formatter->asDatetime(time());
+                $this->sendMessage($client, $msgArray);
             }
         }
     }
-    private function showHistory(ConnectionInterface $conn)
+    private function showHistory(ConnectionInterface $conn,array $msg)
     {
         $chatLogsQuery = ChatLog::find()->orderBy('created_at ASC');
+         if (isset($msg['task_id'])) {
+            $chatLogsQuery->andWhere(['task_id' => (int) $msg['task_id']]);
+        }
+
+        if (isset($msg['project_id'])) {
+            $chatLogsQuery->andWhere(['project_id' => (int) $msg['project_id']]);
+        }
         foreach ($chatLogsQuery->each() as $chatLog) {
             /**
              * @var ChatLog $chatLog
              */
-            $this->sendMessage($conn, ['message'=>$chatLog->message, 'username'=>$chatLog->username]);
+           $this->sendMessage($conn, [
+                'message'=>$chatLog->message,
+                'username'=>$chatLog->username,
+                'created_at'=>\Yii::$app->formatter->asDatetime($chatLog->created_at)
+            ]);
         }
     }
     /**
