@@ -13,6 +13,10 @@ return [
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
         'request' => [
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ],
+
             'csrfParam' => '_csrf-frontend',
         ],
         'user' => [
@@ -36,14 +40,16 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /* error working
+        
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+            ['class' => 'yii\rest\UrlRule', 'controller' => 'DataBaseCommunication'],
+
             ],
         ],
-        */
+       
     ],
     'params' => $params,
 ];
