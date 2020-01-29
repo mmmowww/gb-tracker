@@ -18,9 +18,7 @@ class m200118_141403_Project extends Migration
             'manualProject' => $this->text(),
             'priority'=>$this->integer(), //0,1,2,3 0- Самое важное,1 - менее и т.д.
             'ProjectStatus'=>$this->text(), //Начато Выполняеться Выполненно, Сданно,
-            'ProjectJSON' =>$this->json(),   /// Вот тут себе голову сломал.
-            // Изночалаьно не мог какими хорактиристиками должен обладать "Проэкт"
-            // По этому посчитал что пускай он описваеться отдельными данными JSON
+            'ProjectJSON' =>$this->text(),   /// C json он работать не хочет первёл на текст
 
         ]);
             $sql = "CREATE TRIGGER ProjectСreation

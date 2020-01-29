@@ -17,6 +17,8 @@ use frontend\models\ContactForm;
 use frontend\models\BDregister;
 use frontend\models\TaskProblem;
 use frontend\models\Chatlog;
+use frontend\models\formTask;
+use frontend\models\EditTask;
 
 
 /**
@@ -314,15 +316,7 @@ return $this->render('index');  // Выгоняем его
     ///Запросимка пост
     $reqvest = Yii::$app->request->post();
     $id = $reqvest['SignupForm']['id']; // Вясняю ид проэкта
-/*
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-1)Выбрать из таска ИД проэкта
-2)связать вид таска+проэкта
 
-
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-*/
 
     ////
     $ProjectJSON = (new \yii\db\Query())
@@ -348,7 +342,26 @@ return $this->render('index');  // Выгоняем его
     ->limit(10)
     ->where('id=:id',[':id'=>$id])
     ->all();
-    return $this->render('Concretokaltask',['Task'=>$Task]);
+    $formT = new formTask;
+   $CreateNewTask = Yii::$app->request->post();
+      
+
+   
+   $formT->username=$CreateNewTask["formTask"]["username"];
+    $formT->username=$CreateNewTask["formTask"]["username"];
+    $formT->nameTask=$CreateNewTask["formTask"]["nameTask"];
+    $formT->manualTask=$CreateNewTask["formTask"]["manualTask"];
+    $formT->priority=$CreateNewTask["formTask"]["priority"];
+    $formT->ProjectStatus=$CreateNewTask["formTask"]["ProjectStatus"];
+    $formT->idProject=$CreateNewTask["formTask"]["inProgres"];
+    
+ $CreateNewTask=$CreateNewTask["formTask"]["username"];
+
+
+
+    return $this->render('Concretokaltask',['Task'=>$Task,
+                                            'formT'=>$formT,
+                                            'CreateNewTask'=>$CreateNewTask]);
     }
     public function actionEdittask($id){ //Вот когда я 2жды заиспользовал Id то задумался, может логически я делаю что-то не так.
         if(is_null($EditTask)){
@@ -375,8 +388,18 @@ return $this->render('index');  // Выгоняем его
 
         ], 'id=:id',[':id'=>$id])->execute();
         };
-       
+      
+    $MyTask =  (new \yii\db\Query())
+    ->select(['id','username','nameTask','manualTask','priority','ProjectStatus','idProject' ])
+    ->from('task')
+    ->where(['id' => $id])
+    ->limit(1)
+    ->all();
 
+
+   
+    return $this->render('edittask',['EditTask'=>$EditTask,
+                                    'MyTask'=>$MyTask]);
 
     }
     public function actionProject($id){ // Обработка проэкта

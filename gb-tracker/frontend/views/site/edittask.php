@@ -5,41 +5,65 @@ use yii\bootstrap\ActiveForm;
 $this->title = 'Edit task';
 
 ?>
+<h2>Текущий задача</h2>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>id Проэкта</th>
+      <th>Имя исполнителя</th>
+      <th>Имя задачи</th>
+      <th>Описание задачи</th>
+      <th>Приоритет</th>
+      <th>Статус</th>
+      <th>Относиться к проэкту</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+
 <?
 
-        var_dump($user);
-        var_dump($email);
-        var_dump($password);
+foreach($MyTask as $Task){
+
+echo Html::tag('tr');   
+ echo Html::tag('th');
+  echo Html::tag('th',$Task['id']);
+  echo Html::tag('th',$Task['username']);
+  echo Html::tag('th',$Task['nameTask']);
+  echo Html::tag('th',$Task['manualTask']);
+  echo Html::tag('th',$Task['priority']);
+  echo Html::tag('th',$Task['ProjectStatus']);
+  echo Html::tag('th',$Task['idProject']);
+   
+echo Html::tag('/tr');
+
+
+
+};
+        
 ?>
 
+</table>
 <div class="site-signup">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out the following fields to signup:</p>
-
     <div class="row">
         <div class="col-lg-5">
-            <?php $editTask = ActiveForm::begin(); ?>
+            <?php $edit = ActiveForm::begin(); ?>
 
-                <?= $editTask->field($editTask, 'TaskName') ?>
+                <?=$edit->field($EditTask, 'TaskName') ?>
 
-                <?= $editTask->field($editTask, 'TaskManual') ?>
+                <?=$edit->field($EditTask, 'TaskManual') ?>
 
-                <?= $editTask->field($editTask, 'UserName') ?>
+                <?=$edit->field($EditTask, 'UserName') ?>
 
-                <?= $editTask->field($editTask, 'dataCreate') ?>
+                <?=$edit->field($EditTask, 'dataCreate') ?>
 
-                <?= $editTask->field($editTask, 'dataUpdate') ?>
-
-
-
-
-
-
-
+                <?=$edit->field($EditTask, 'dataUpdate') ?>
 
                 <div class="form-group">
-                    <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+                    <?= Html::submitButton('Отредоктировать', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
                 </div>
 
             <?php ActiveForm::end(); ?>
