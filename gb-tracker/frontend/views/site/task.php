@@ -3,46 +3,54 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 ?>
-<h1>  This Task  </h1>
-
-<h2> Задачи </h2>
+<h2>Текущий задача</h2>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>id Проэкта</th>
+      <th>Имя исполнителя</th>
+      <th>Имя задачи</th>
+      <th>Описание задачи</th>
+      <th>Приоритет</th>
+      <th>Статус</th>
+      <th>Относиться к проэкту</th>
+    </tr>
+  </thead>
+  <tbody>
 
 <?php
- $Task1= $Task['0'];
-var_dump($Task1);
+ $Task1= $Task;
+
+
+
  
 
-foreach ($Task1 as $MyTask) {
+foreach ($Task as $MyTask) {
+$id = $MyTask["id"];
+ $user = $MyTask["username"]; 
+ $nameTask = $MyTask["nameTask"]; 
+ $manual = $MyTask["manualTask"];
+ $priority = $MyTask["priority"];
+ $status = $MyTask["ProjectStatus"];
+ $idproject = $MyTask["idProject"];
+
+
 	
- $id = $MyTask[0];
-
- $user = $MyTask[1]; 
- $nameTask = $MyTask[2]; 
- $manual = $MyTask[3];
- $priority = $MyTask[4];
- $status = $MyTask[5];
- $idproject = $MyTask[6];
-
-
-echo "--</br(-->";
- echo $id = iconv("ASCII","UTF-8",$id);
- echo "--)</br-->";
- $user = iconv("ASCII","UTF-8",$user); 
- $nameTask = iconv("ASCII","UTF-8",$nameTask); 
- $manual = iconv("ASCII","UTF-8",$manual);
- $priority = iconv("ASCII","UTF-8",$priority);
- $status = iconv("ASCII","UTF-8",$status);
- $idproject = iconv("ASCII","UTF-8",$idproject);
-
-	echo "</br>";
-	echo '<a href = "'.Url::to(['site/concretokaltask',['id'=>$idproject]]).'">('.$name.') Номер :'.$id.'</a>';
-	echo "</br>";
-	echo "Task Manual";
-	echo "</br>";
-	echo $manual; 
-	echo "</br>";
-	echo "Исполняет: ".$user;
-	echo "</br>--------</br>";
+    
+    echo Html::tag('tr');   
+ echo Html::tag('th');
+  echo Html::tag('th',$MyTask['id']);
+  echo Html::tag('th',$MyTask['username']);
+  //$HREF =  Url::to(['site/concretokaltask',['id'=>$idproject]]);      // эти не работают
+  //echo Html::a($MyTask['nameTask'],['site/concretokaltask','id'=>$id]); // эти не работают
+  echo '<th><a href = "'.Url::to(['site/concretokaltask',['id'=>$idproject]]).'">'.$nameTask.'</a></th>'; //Мой костыль
+  echo Html::tag('th',$MyTask['manualTask']);
+  echo Html::tag('th',$MyTask['priority']);
+  echo Html::tag('th',$MyTask['ProjectStatus']);
+  echo Html::tag('th',$MyTask['idProject']);
+   
+echo Html::tag('/tr');
 
 };
 
@@ -54,7 +62,8 @@ echo "--</br(-->";
 
 
 ?>
-
+</tbody>
+</table>
 <h2>Чат</h2>
 <h2>THIS IS CHAT!</h2>
 <div id="chat" style="min-height: 100px; border-color: #1c7430; border: 2px;"></div>
