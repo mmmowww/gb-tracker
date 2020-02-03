@@ -36,7 +36,9 @@
         "symfony/event-dispatcher":"<=4.2.8",
         "facebook/webdriver":"^1.0.1",
         "symfony/event-dispatcher": "<=4.2.8",
-        "cboden/ratchet": "^0.4.1"
+        "cboden/ratchet": "^0.4.1",
+        "stevad/yii2-xhprof": "^1.1",
+        "consik/yii2-websocket": "^1.0"
     },
     "config": {
         "process-timeout": 1800,
