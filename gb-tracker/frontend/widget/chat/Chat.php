@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: evg
- * Date: 20/01/2020
- * Time: 19:29
- */
-
 namespace frontend\widgets\chat;
 
 class Chat extends \yii\base\Widget
@@ -31,8 +24,6 @@ class Chat extends \yii\base\Widget
         $this->view->registerMetaTag(['name'=>'chat-widget-project-id', 'content'=>$this->project_id]);
         $this->view->registerMetaTag(['name'=>'chat-widget-task-id', 'content'=>$this->task_id]);
         $this->view->registerMetaTag(['name'=>'chat-widget-username', 'content'=>$this->username]);
-        $this->view->registerMetaTag(['name'=>'chat-widget-AlarmTask', 'content'=>$this->AlarmTask]);
-        $this->view->registerMetaTag(['name'=>'chat-widget-AlarmProject', 'content'=>$this->AlarmProject]);
     }
 
 
@@ -40,4 +31,4 @@ class Chat extends \yii\base\Widget
     {
         return $this->render('index');
     }
-} 
+}

@@ -19,6 +19,8 @@ use frontend\models\TaskProblem;
 use frontend\models\Chatlog;
 use frontend\models\formTask;
 use frontend\models\EditTask;
+use yii\caching\Cache;
+use yii\caching\FileCache;
 
 
 /**
@@ -331,8 +333,27 @@ return $this->render('index');  // Выгоняем его
 
 
 
-////
-    return $this->render('task',['Task'=>$Task]); 
+
+    ////Кеширование глобального общщего запроса
+    if(!isset($cashe)){
+    global $cashe; // Global - понимаю очень сильный "Моральный" косяк но иначе я не знаю как
+    $cashe=Yii::$app->db->cache(function () {
+      return Yii::$app->db->createCommand('SELECT * FROM `task`')->queryAll();
+      });
+    
+    $FileCashe  = fopen("cashe.txt","w+");
+    $LocalCashe = $cashe;
+    $FileWrite = json_encode($LocalCashe);
+   $cashe = $FileWrite;
+
+   
+       
+
+}
+
+    return $this->render('task',['Task'=>$Task,
+                                'cashe'=>$cashe]); 
+
           
     }
     function actionConcretokaltask($id){
@@ -432,3 +453,8 @@ return $this->render('project',[
 ]);
     }
 }
+
+
+
+
+
