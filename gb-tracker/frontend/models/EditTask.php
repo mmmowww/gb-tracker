@@ -10,6 +10,7 @@ use common\models\User;
  */
 class EditTask extends Model
 {
+	//// Уровень доступа
 public $TaskName;
 public $TaskManual;
 public $UserName;

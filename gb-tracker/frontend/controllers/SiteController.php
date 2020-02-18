@@ -1,4 +1,14 @@
 <?php
+// the god class
+// С одной стороны я хотел что бы вся 
+// Жизнь сервера здесь и описовалась.
+// Но понял что класс очень сильно разросся.
+// Возможно пока его спасает то что он мал
+// И более менее сам по себе нашенкован
+// Также нейминг переменных и функцый,
+// Да я пытался их зделать компактными и что бы они вырожали свой смысл.
+// Боялся сделать их длиными а это на мой взгляд и есть праблема, 
+// Нужно было этого не бояться
 namespace frontend\controllers;
 
 use frontend\models\ResendVerificationEmailForm;
@@ -301,13 +311,16 @@ class SiteController extends Controller
         return $this->render('hello');   
     }
     //////// Работа с таском
+    /// Вот тут все взаимодействия с таскмо надо было вынести в 
+    // отдельную папку в отдельный класс
     function actionTask(){  //Tasktracker
 
 if(!Yii::$app->user->isGuest){  // Если клиент нам не нравиться
 return $this->render('index');  // Выгоняем его
 }
 
-
+/// Возможно лазанья код, так как много действий
+/// а хочиться их уменьшить
 
      $Task = (new \yii\db\Query())
     ->select(['id', 'username','nameTask','manualTask','priority','ProjectStatus','idProject'])
@@ -356,6 +369,10 @@ return $this->render('index');  // Выгоняем его
 
           
     }
+    /// Ну что сказать
+    // Жду цыфру интеджера
+    // $id = integer;
+    // Не каких проверок, парсеровки и т.д.
     function actionConcretokaltask($id){
         $Task = (new \yii\db\Query())
     ->select(['id', 'TaskName','TaskManual','UserName','dataCreate','dataUpdate'])
@@ -454,7 +471,9 @@ return $this->render('project',[
     }
 }
 
-
+// Нашенковал бы данный класс,
+// Создал бы папки с логическим названием, там внутри были бы классы
+//Кои занимаються только отдельнной работой
 
 
 
