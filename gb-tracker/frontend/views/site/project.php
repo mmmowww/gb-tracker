@@ -1,4 +1,5 @@
 <?
+/// логика в виде
 echo "PROJECT: ".$id;
 //var_dump($ProjectJSON);
 echo "</br>---</br>";

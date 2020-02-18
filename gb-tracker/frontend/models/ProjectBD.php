@@ -9,6 +9,7 @@ use yii\db\ActiveRecord;
 
 class ProjectBD extends ActiveRecord
 {
+	//// Уровень доступа
 	public $id; 
 	public $nameProject; // Имя проэкта
 	public $manualProject; // Описание

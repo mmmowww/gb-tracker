@@ -9,7 +9,7 @@ use yii\db\ActiveRecord;
 
 class formTask extends ActiveRecord
 {
-
+ //// Уровень доступа
 public $id;
 public $username;
 public $nameTask;

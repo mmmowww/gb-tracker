@@ -7,6 +7,8 @@ use yii\widgets\ActiveForm;
 print_r($CreateNewTask);
 echo "</br>";
 var_dump($CreateNewTask);
+// Недоделанно, логика в виде(Неуверен что можно так
+// Но я бы по возможности убрал)
 ?>
 
 	 	 	 	 	 	 	 
@@ -68,4 +70,6 @@ echo "Отредоктировать? </br>";
 echo "<button>Нет</button> </br>";
 echo '<button><a href = "'.Url::to(['site/edittask','id'=>$MyTask['id']]).'">Преступить к редоктированию</a></button></br>';
 }
+
+// Минимизировал бы логику как таковую, оставил только функцыии рендора
 ?>
