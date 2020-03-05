@@ -1,0 +1,4 @@
+<?
+interface LazyInstal {
+	
+}
